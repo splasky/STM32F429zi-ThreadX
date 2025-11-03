@@ -5,9 +5,9 @@
   * @author  MCD Application Team
   * @brief   ThreadX applicative header file
   ******************************************************************************
-    * @attention
+  * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -17,13 +17,12 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __APP_THREADX_H
-#define __APP_THREADX_H
+#ifndef __APP_THREADX_H__
+#define __APP_THREADX_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -44,17 +43,6 @@
 
 /* USER CODE END EC */
 
-/* Private defines -----------------------------------------------------------*/
-
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Main thread defines -------------------------------------------------------*/
-/* USER CODE BEGIN MTD */
-
-/* USER CODE END MTD */
-
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
@@ -63,10 +51,14 @@
 /* Exported functions prototypes ---------------------------------------------*/
 UINT App_ThreadX_Init(VOID *memory_ptr);
 void MX_ThreadX_Init(void);
-
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */
 

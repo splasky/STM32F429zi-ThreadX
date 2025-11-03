@@ -24,7 +24,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */
 /*                                                                        */
 /*    tx_user.h                                           PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.0          */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -42,33 +42,12 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020      William E. Lamie        Initial Version 6.0           */
-/*  09-30-2020      Yuxin Zhou              Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*  03-02-2021      Scott Larson            Modified comment(s),          */
-/*                                            added option to remove      */
-/*                                            FileX pointer,              */
-/*                                            resulting in version 6.1.5  */
-/*  06-02-2021      Scott Larson            Added options for multiple    */
-/*                                            block pool search & delay,  */
-/*                                            resulting in version 6.1.7  */
-/*  10-15-2021      Yuxin Zhou              Modified comment(s), added    */
-/*                                            user-configurable symbol    */
-/*                                            TX_TIMER_TICKS_PER_SECOND   */
-/*                                            resulting in version 6.1.9  */
-/*  04-25-2022      Wenhui Xie              Modified comment(s),          */
-/*                                            optimized the definition of */
-/*                                            TX_TIMER_TICKS_PER_SECOND,  */
-/*                                            resulting in version 6.1.11 */
+/*  05-19-2020     William E. Lamie         Initial Version 6.0           */
 /*                                                                        */
 /**************************************************************************/
 
 #ifndef TX_USER_H
 #define TX_USER_H
-
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
 
 /* Define various build options for the ThreadX port.  The application should either make changes
    here by commenting or un-commenting the conditional compilation defined OR supply the defines
@@ -133,6 +112,14 @@
 
 /*#define TX_DISABLE_STACK_FILLING*/
 
+/* Determine whether or not stack checking is enabled. By default, ThreadX stack checking is
+   disabled. When the following is defined, ThreadX thread stack checking is enabled.  If stack
+   checking is enabled (TX_ENABLE_STACK_CHECKING is defined), the TX_DISABLE_STACK_FILLING
+   define is negated, thereby forcing the stack fill which is necessary for the stack checking
+   logic.  */
+
+/*#define TX_ENABLE_STACK_CHECKING*/
+
 /* Determine if preemption-threshold should be disabled. By default, preemption-threshold is
    enabled. If the application does not use preemption-threshold, it may be disabled to reduce
    code size and improve performance.  */
@@ -144,6 +131,19 @@
    clearing of ThreadX global variables.  */
 
 /*#define TX_DISABLE_REDUNDANT_CLEARING*/
+
+/* Determine if no timer processing is required. This option will help eliminate the timer
+   processing when not needed. The user will also have to comment out the call to
+   tx_timer_interrupt, which is typically made from assembly language in
+   tx_initialize_low_level. Note: if TX_NO_TIMER is used, the define TX_TIMER_PROCESS_IN_ISR
+   must also be used.  */
+
+/*
+#define TX_NO_TIMER
+#ifndef TX_TIMER_PROCESS_IN_ISR
+#define TX_TIMER_PROCESS_IN_ISR
+#endif
+*/
 
 /* Determine if the notify callback option should be disabled. By default, notify callbacks are
    enabled. If the application does not use notify callbacks, they may be disabled to reduce
@@ -208,21 +208,22 @@
 
 /*#define TX_TIMER_ENABLE_PERFORMANCE_INFO*/
 
+/* Define if the execution change notify is enabled. */
+
+/*#define TX_ENABLE_EXECUTION_CHANGE_NOTIFY*/
+
+/* Define the get system state macro. */
+
+/*#define TX_THREAD_GET_SYSTEM_STATE() _tx_thread_system_state */
+
+/* Define the check for whether or not to call the
+    _tx_thread_system_return function (TX_THREAD_SYSTEM_RETURN_CHECK(c)). */
+
+/*#define #define TX_THREAD_SYSTEM_RETURN_CHECK (c)  ((ULONG) _tx_thread_preempt_disable)*/
+
 /* Define the common timer tick reference for use by other middleware components. */
 
 /*#define TX_TIMER_TICKS_PER_SECOND                100*/
-
-/* Defined, the basic parameter error checking is disabled. */
-
-/*#define TX_DISABLE_ERROR_CHECKING*/
-
-/* Determine if there is a FileX pointer in the thread control block.
-   By default, the pointer is there for legacy/backwards compatibility.
-   The pointer must also be there for applications using FileX.
-   Define this to save space in the thread control block.
-*/
-
-/*#define TX_NO_FILEX_POINTER*/
 
 /* Determinate if the basic alignment type is defined. */
 
@@ -236,12 +237,14 @@
 
 /*#define TX_MEMSET  memset((a),(b),(c))*/
 
+#ifdef __IAR_SYSTEMS_ASM__
+/* Define if the IAR library is supported. */
+/*#define TX_ENABLE_IAR_LIBRARY_SUPPORT*/
+#endif
+
 /* Define if the safety critical configuration is enabled. */
 
 /*#define TX_SAFETY_CRITICAL*/
 
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
-
 #endif
+
