@@ -4,11 +4,11 @@
   ******************************************************************************
   * @file    app_azure_rtos_config.h
   * @author  MCD Application Team
-  * @brief   app_azure_rtos config header file
+  * @brief   azure_rtos config header file
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -39,10 +39,7 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-/* Using static memory allocation via threadX Byte memory pools */
-
-#define USE_STATIC_ALLOCATION                1
-
+/* define the size of static threadX byte memory pools */
 #define TX_APP_MEM_POOL_SIZE                     1024
 
 /* USER CODE BEGIN EC */
@@ -69,4 +66,3 @@ extern "C" {
 #endif
 
 #endif /* APP_AZURE_RTOS_CONFIG_H */
-
